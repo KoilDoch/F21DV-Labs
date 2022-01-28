@@ -15,6 +15,8 @@
     <div></div>
     <div></div>
     <div></div>
+    <div></div>
+    <div></div>
     <script>
         //--EXERCISE 3, 4 and 5--
         // Creates 10 div elements
@@ -31,22 +33,41 @@
         // d3.select("#div0").text("start").style("color", "purple");   // change first element to purple and 'start'
 
         //--EXCERCISE 6--
-        let data =  [ {name:'test', color: "red", val:1}, 
-                {name:'other', color: "blue", val:2},
-                {name:'b', color: "yellow", val:3} ];
+        // let data =  [ {name:'test', color: "red", val:1}, 
+        //         {name:'other', color: "blue", val:2},
+        //         {name:'b', color: "yellow", val:3} ];
 
-        let paragraph = d3.select('body')
-            .selectAll('div')
-            .data(data)
-            .text((d,i) => {
-                console.log("d.name:" + d.name);
-                console.log("d.color: " + d.color);
-                console.log("d.val:" + d.val);
-                console.log("i:" + i);
-                console.log("this: " + this);
+        // let paragraph = d3.select('body')
+        //     .selectAll('div')
+        //     .data(data)
+        //     .text((d,i) => {
+        //         console.log("d.name:" + d.name);
+        //         console.log("d.color: " + d.color);
+        //         console.log("d.val:" + d.val);
+        //         console.log("i:" + i);
+        //         console.log("this: " + this);
 
-                return 'cont:' + d.name + " is " + d.color;    // return value is used to set the 'text'
-            });
+        //         return 'cont:' + d.name + " is " + d.color;    // return value is used to set the 'text'
+        //     });
+
+        //--EXERCISE 7--
+        let num = [10, 50, 75, 100, 200];
+
+        let paragraph = d3.select("body")
+            .selectAll("div")
+            .data(num)
+            .text(function (d, i) {
+                return 'cont:' + d; // return value is used to set the 'text'
+            })
+        .style("color", function(d, i) {
+            if ( d > 50 && d < 100 ) {
+            return "red";
+            } else {
+            return "yellow";
+            }
+            return 'blue';
+        });
+
     </script>
 </body>
 </html>
