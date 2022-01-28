@@ -21,8 +21,11 @@
                 .style("color", function(d) {
                     if (i < 5) {return "red"}
                     else {return "green"}
-                });
+                })
+                .attr("id", "div"+i);
         }
+
+        d3.select("#div0").text("start").style("color", "purple");
     </script>
 </body>
 </html>
