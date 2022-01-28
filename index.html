@@ -12,20 +12,41 @@
 </head>
 
 <body>
-
+    <div></div>
+    <div></div>
+    <div></div>
     <script>
-        for(let i = 0; i < 10; i++){
-            d3.select("body")
-                .append("div")
-                .text(i)
-                .style("color", function(d) {
-                    if (i < 5) {return "red"}
-                    else {return "green"}
-                })
-                .attr("id", "div"+i);
-        }
+        //--EXERCISE 3, 4 and 5--
+        // Creates 10 div elements
+        // for(let i = 0; i < 10; i++){
+        //     d3.select("body")
+        //         .append("div")
+        //         .text(i)
+        //         .style("color", function(d) {    
+        //             if (i < 5) {return "red"}    // first 5 elements have red text
+        //             else {return "green"}        // last 5 elements have green text
+        //         })
+        //         .attr("id", "div"+i);
+        // }
+        // d3.select("#div0").text("start").style("color", "purple");   // change first element to purple and 'start'
 
-        d3.select("#div0").text("start").style("color", "purple");
+        //--EXCERCISE 6--
+        let data =  [ {name:'test', color: "red", val:1}, 
+                {name:'other', color: "blue", val:2},
+                {name:'b', color: "yellow", val:3} ];
+
+        let paragraph = d3.select('body')
+            .selectAll('div')
+            .data(data)
+            .text((d,i) => {
+                console.log("d.name:" + d.name);
+                console.log("d.color: " + d.color);
+                console.log("d.val:" + d.val);
+                console.log("i:" + i);
+                console.log("this: " + this);
+
+                return 'cont:' + d.name + " is " + d.color;    // return value is used to set the 'text'
+            });
     </script>
 </body>
 </html>
