@@ -49,20 +49,39 @@
 // });
 
 //--EXERCISE 8--
-var myData = ['a', 4, 1, 'b', 6, 2, 8, 9, 'z'];
+// var myData = ['a', 4, 1, 'b', 6, 2, 8, 9, 'z'];
 
-var p = d3.select("body")
-    .selectAll("span")
-    .data(myData)
-    .enter()
-        .append('span')
-        .text(function (d, i) {
-            return d;
-        })
-        .style("color", (d,i) => {
-            console.log(typeof(d));
-            if (typeof(d) == "number")
-                return "green";
-            else if (typeof(d) == "string")
-                return "red";
-        });
+// var p = d3.select("body")
+//     .selectAll("span")
+//     .data(myData)
+//     .enter()
+//         .append('span')
+//         .text(function (d, i) {
+//             return d;
+//         })
+//         .style("color", (d,i) => {
+//             console.log(typeof(d));
+//             if (typeof(d) == "number")
+//                 return "green";
+//             else if (typeof(d) == "string")
+//                 return "red";
+//         });
+
+//--Exercise 9--
+let titaniccsv = 'https://raw.githubusercontent.com/dsindy/kaggle-titanic/master/data/test.csv';
+let countMr = 0;
+let class3 = 0;
+d3.csv(titaniccsv, (data) => {
+    // count any names including Mr
+    if(data.Name.includes("Mr."))
+        countMr++;
+    // count any 3rd class passengers
+    if(data.Pclass == 3)
+        class3++;
+}).then( () => {
+    // .then invoked to be sure the previous process is complete
+    console.log("Number of 'Mr.'s aboard: " + countMr);
+    console.log("Number of 3rd Class Passengers: " + class3);
+});
+
+
