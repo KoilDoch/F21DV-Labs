@@ -133,83 +133,130 @@
 //         .attr("stroke", (d,i)=>color[i] );
 
 //--Exercise 12 && 13--
+// // arrays to hold each type of object
+// var circles = [];
+// var rectangles = [];
+// var ellipses = [];
 
-// arrays to hold each type of object
-var circles = [];
-var rectangles = [];
-var ellipses = [];
+// //Create SVG element
+// var svg = d3.select("body")
+//     .append("svg")
+//     .attr("width", 400)
+//     .attr("height", 400)
+//     .style("border", '1px solid green');
 
-//Create SVG element
-var svg = d3.select("body")
-    .append("svg")
-    .attr("width", 400)
-    .attr("height", 400)
-    .style("border", '1px solid green');
+// d3.csv("shapes.csv", (data) => {
+//     // sort the data into respective arrays
+//     switch(data.shape){
+//         case "circle":
+//             circles.push(data);
+//             break;
+//         case "rect":
+//             rectangles.push(data);
+//             break;
+//         case "ellipse":
+//             ellipses.push(data);
+//             break;
+//         default:
+//             break;
+//     }
+// }).then(() => {
 
-d3.csv("shapes.csv", (data) => {
-    // sort the data into respective arrays
-    switch(data.shape){
-        case "circle":
-            circles.push(data);
-            break;
-        case "rect":
-            rectangles.push(data);
-            break;
-        case "ellipse":
-            ellipses.push(data);
-            break;
-        default:
-            break;
-    }
-}).then(() => {
+//     // display the circles
+//     svg.selectAll("circles")
+//         .data(circles)
+//         .join(
+//             enter => { 
+//                 enter.append("circle")
+//                     .attr("cx", (d)=>d.dim1)
+//                     .attr("cy", (d)=>d.dim2)
+//                     .attr("r", (d)=>d.dim3)
+//                     .attr("fill", (d)=>d.color);
+//              },
+//             exit => {
+//                 exit.remove();
+//             }
+//         );
 
-    // display the circles
-    svg.selectAll("circles")
-        .data(circles)
-        .join(
-            enter => { 
-                enter.append("circle")
-                    .attr("cx", (d)=>d.dim1)
-                    .attr("cy", (d)=>d.dim2)
-                    .attr("r", (d)=>d.dim3)
-                    .attr("fill", (d)=>d.color);
-             },
-            exit => {
-                exit.remove();
-            }
-        );
+//     // display the rectangles
+//     svg.selectAll("rect")
+//         .data(rectangles)
+//         .join(
+//             enter => { 
+//                 enter.append("rect")
+//                     .attr("x", (d)=>d.dim1)
+//                     .attr("y", (d)=>d.dim2)
+//                     .attr("width", (d)=>d.dim3)
+//                     .attr("height", (d)=>d.dim4)
+//                     .attr("fill", (d)=>d.color);
+//              },
+//             exit => {
+//                 exit.remove();
+//             }
+//         );
 
-    // display the rectangles
-    svg.selectAll("rect")
-        .data(rectangles)
-        .join(
-            enter => { 
-                enter.append("rect")
-                    .attr("x", (d)=>d.dim1)
-                    .attr("y", (d)=>d.dim2)
-                    .attr("width", (d)=>d.dim3)
-                    .attr("height", (d)=>d.dim4)
-                    .attr("fill", (d)=>d.color);
-             },
-            exit => {
-                exit.remove();
-            }
-        );
+//     // display the ellipses
+//     svg.selectAll("ellipse")
+//         .data(ellipses)
+//         .join(
+//             enter => { 
+//                 enter.append("ellipse")
+//                     .attr("cx", (d)=>d.dim1)
+//                     .attr("cy", (d)=>d.dim2)
+//                     .attr("rx", (d)=>d.dim3)
+//                     .attr("ry", (d)=>d.dim4)
+//                     .attr("fill", (d)=>d.color);
+//              },
+//             exit => {
+//                 exit.remove();
+//             }
+//         );
+// });
 
-    // display the ellipses
-    svg.selectAll("ellipse")
-        .data(ellipses)
-        .join(
-            enter => { 
-                enter.append("ellipse")
-                    .attr("cx", (d)=>d.dim1)
-                    .attr("cy", (d)=>d.dim2)
-                    .attr("rx", (d)=>d.dim3)
-                    .attr("ry", (d)=>d.dim4)
-                    .attr("fill", (d)=>d.color);
-             },
-            exit => {
-                exit.remove();
-            }
-        );
-});
+//--Exercise 14--
+// csv file 
+let heartfailurecsv = 'https://raw.githubusercontent.com/akmand/datasets/master/heart_failure.csv';
+// array to hold the quantity of each age group
+let ages = [0,0,0,0];
+var barWidth = 50;
+var scaleFactor = 2;
+var height = 400;
+
+d3.csv(heartfailurecsv, (data) => {
+        // sort the ages into respective array index
+         if (data.age < 31) { ages[0]++; } else 
+         if (data.age < 41) { ages[1]++; } else 
+         if (data.age < 61) { ages[2]++; } else 
+         if (data.age < 101) { ages[3]++; }
+     }).then( () => {
+        console.log(ages);
+
+        // create the svg
+        var graph = d3.select("body")
+            .append("svg")
+            .attr("width",barWidth*ages.length)
+            .attr("height", height);
+
+        // create the bar
+        var bar = graph.selectAll("g")
+            .data(ages)
+            .enter()
+            .append("g")
+            .attr("transform", (d,i) =>
+                "translate("+i*barWidth+",0)");
+
+        // add the bar
+        bar.append("rect")
+            .attr("width", barWidth-1)
+            .attr("y", (d)=>height-(d*scaleFactor))
+            .attr("height", d => d * scaleFactor);
+
+        // add the text
+        bar.append("text")
+            .attr("x", barWidth / 2)
+            .attr("y", (d)=>height-d*scaleFactor)
+            .attr("dy", ".35em")
+            .style("fill", "red")
+            .text(d=>d);
+     });
+

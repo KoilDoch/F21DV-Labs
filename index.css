@@ -1,0 +1,15 @@
+/* EXERCISE 14 */
+svg {
+    background-color: bisque;
+}
+
+svg rect {
+    fill: blue;
+   }
+
+svg text {
+    fill:white;
+    font: 10px sans-serif;
+    text-anchor: end;
+}
+   
