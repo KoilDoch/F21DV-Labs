@@ -132,52 +132,84 @@
 //         .attr("y2", (d=>d[3]))
 //         .attr("stroke", (d,i)=>color[i] );
 
-//--Exercise 12--
+//--Exercise 12 && 13--
+
+// arrays to hold each type of object
+var circles = [];
+var rectangles = [];
+var ellipses = [];
+
+//Create SVG element
 var svg = d3.select("body")
- .append("svg")
- .attr("width", 400)
- .attr("height", 400)
- .style("border", "1px solid black");
+    .append("svg")
+    .attr("width", 400)
+    .attr("height", 400)
+    .style("border", '1px solid green');
 
 d3.csv("shapes.csv", (data) => {
-    console.log(data.dimensions);
-    switch (data.shape){
+    // sort the data into respective arrays
+    switch(data.shape){
         case "circle":
-            newCircle([data.dim1, data.dim2, data.dim3], data.color);
+            circles.push(data);
             break;
         case "rect":
-            newRect([data.dim1, data.dim2, data.dim3, data.dim4], data.color);
+            rectangles.push(data);
             break;
         case "ellipse":
-            newEllipse([data.dim1, data.dim2, data.dim3, data.dim4], data.color)
+            ellipses.push(data);
             break;
         default:
             break;
     }
+}).then(() => {
+
+    // display the circles
+    svg.selectAll("circles")
+        .data(circles)
+        .join(
+            enter => { 
+                enter.append("circle")
+                    .attr("cx", (d)=>d.dim1)
+                    .attr("cy", (d)=>d.dim2)
+                    .attr("r", (d)=>d.dim3)
+                    .attr("fill", (d)=>d.color);
+             },
+            exit => {
+                exit.remove();
+            }
+        );
+
+    // display the rectangles
+    svg.selectAll("rect")
+        .data(rectangles)
+        .join(
+            enter => { 
+                enter.append("rect")
+                    .attr("x", (d)=>d.dim1)
+                    .attr("y", (d)=>d.dim2)
+                    .attr("width", (d)=>d.dim3)
+                    .attr("height", (d)=>d.dim4)
+                    .attr("fill", (d)=>d.color);
+             },
+            exit => {
+                exit.remove();
+            }
+        );
+
+    // display the ellipses
+    svg.selectAll("ellipse")
+        .data(ellipses)
+        .join(
+            enter => { 
+                enter.append("ellipse")
+                    .attr("cx", (d)=>d.dim1)
+                    .attr("cy", (d)=>d.dim2)
+                    .attr("rx", (d)=>d.dim3)
+                    .attr("ry", (d)=>d.dim4)
+                    .attr("fill", (d)=>d.color);
+             },
+            exit => {
+                exit.remove();
+            }
+        );
 });
-
-function newCircle(dim, color){
-    svg.append("circle")
-        .attr("cx", dim[0])
-        .attr("cy", dim[1])
-        .attr("r", dim[2])
-        .attr("fill", color);
-}
-
-function newRect(dim, color){
-    svg.append("rect")
-        .attr("x", dim[0])
-        .attr("y", dim[1])
-        .attr("width", dim[2])
-        .attr("height", dim[3])
-        .attr("fill", color);
-}
-
-function newEllipse(dim, color){
-    svg.append("ellipse")
-        .attr("cx", dim[0])
-        .attr("cy", dim[1])
-        .attr("rx", dim[2])
-        .attr("ry", dim[3])
-        .attr("fill", color);
-}
