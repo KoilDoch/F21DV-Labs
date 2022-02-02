@@ -1,0 +1,6 @@
+shape,dim1,dim2,dim3,dim4,color
+circle,225,50,40,,blue
+rect,20,20,150,150,red
+ellipse,300,300,15,20,green
+circle,210,210,50,,yellow
+ellipse,150,325,100,40,purple

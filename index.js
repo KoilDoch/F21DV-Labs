@@ -109,25 +109,75 @@
 // }
 
 //--Exercise 11--
-// line coordinates [x1,x2,y1,y2]
-var lines = [[100, 100, 100, 200], [100, 200, 200, 200], [200, 200, 200, 100], [200, 100, 100, 100]];
-// colors associated with each line
-var color = ['red', 'blue', 'green', 'purple'];
+// // line coordinates [x1,x2,y1,y2]
+// var lines = [[100, 100, 100, 200], [100, 200, 200, 200], [200, 200, 200, 100], [200, 100, 100, 100]];
+// // colors associated with each line
+// var color = ["red", "blue", "green", "purple"];
 
-// Create SVG element
-var svg = d3.select('body')
- .append('svg')
- .attr('width', 400)
- .attr('height', 400)
- .style('border', '1px solid green')
+// // Create SVG element
+// var svg = d3.select("body")
+//  .append("svg")
+//  .attr("width", 400)
+//  .attr("height", 400)
+//  .style("border", "1px solid green");
 
-// add the lines
-svg.selectAll('line')
-    .data(lines)
-    .enter().append('line')
-        // for each index in the data, create a line
-        .attr('x1', (d=>d[0]))
-        .attr('x2', (d=>d[1]))
-        .attr('y1', (d=>d[2]))
-        .attr('y2', (d=>d[3]))
-        .attr('stroke', (d,i)=>color[i] );
+// // add the lines
+// svg.selectAll("line")
+//     .data(lines)
+//     .enter().append("line")
+//         // for each index in the data, create a line 
+//         .attr("x1", (d=>d[0]))
+//         .attr("x2", (d=>d[1]))
+//         .attr("y1", (d=>d[2]))
+//         .attr("y2", (d=>d[3]))
+//         .attr("stroke", (d,i)=>color[i] );
+
+//--Exercise 12--
+var svg = d3.select("body")
+ .append("svg")
+ .attr("width", 400)
+ .attr("height", 400)
+ .style("border", "1px solid black");
+
+d3.csv("shapes.csv", (data) => {
+    console.log(data.dimensions);
+    switch (data.shape){
+        case "circle":
+            newCircle([data.dim1, data.dim2, data.dim3], data.color);
+            break;
+        case "rect":
+            newRect([data.dim1, data.dim2, data.dim3, data.dim4], data.color);
+            break;
+        case "ellipse":
+            newEllipse([data.dim1, data.dim2, data.dim3, data.dim4], data.color)
+            break;
+        default:
+            break;
+    }
+});
+
+function newCircle(dim, color){
+    svg.append("circle")
+        .attr("cx", dim[0])
+        .attr("cy", dim[1])
+        .attr("r", dim[2])
+        .attr("fill", color);
+}
+
+function newRect(dim, color){
+    svg.append("rect")
+        .attr("x", dim[0])
+        .attr("y", dim[1])
+        .attr("width", dim[2])
+        .attr("height", dim[3])
+        .attr("fill", color);
+}
+
+function newEllipse(dim, color){
+    svg.append("ellipse")
+        .attr("cx", dim[0])
+        .attr("cy", dim[1])
+        .attr("rx", dim[2])
+        .attr("ry", dim[3])
+        .attr("fill", color);
+}
