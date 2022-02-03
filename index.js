@@ -213,7 +213,7 @@
 //         );
 // });
 
-//--Exercise 14--
+//--Exercise 14&15--
 // csv file 
 let heartfailurecsv = 'https://raw.githubusercontent.com/akmand/datasets/master/heart_failure.csv';
 // array to hold the quantity of each age group
@@ -249,14 +249,19 @@ d3.csv(heartfailurecsv, (data) => {
         bar.append("rect")
             .attr("width", barWidth-1)
             .attr("y", (d)=>height-(d*scaleFactor))
-            .attr("height", d => d * scaleFactor);
+            .attr("height", d => d * scaleFactor)
+            .style("fill", (d) => {
+                // if the data is extreme (>150), bar is red
+                if(d > 150)
+                    return "red";
+            });
 
         // add the text
         bar.append("text")
             .attr("x", barWidth / 2)
             .attr("y", (d)=>height-d*scaleFactor)
-            .attr("dy", ".35em")
-            .style("fill", "red")
+            .attr("dx", ".35em")
+            .style("fill", "black")
             .text(d=>d);
      });
 
