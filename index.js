@@ -145,7 +145,7 @@
 //     .attr("height", 400)
 //     .style("border", '1px solid green');
 
-// d3.csv("shapes.csv", (data) => {
+// d3.csv("csv/shapes.csv", (data) => {
 //     // sort the data into respective arrays
 //     switch(data.shape){
 //         case "circle":
@@ -318,51 +318,58 @@
 //     .attr("font-family", "sans-serif")
 //     .text(d=>d);
 
-//--EXERCISE 17--
-const data = [50, 400, 300, 900, 250, 1000];
+//--EXERCISE 17 & 18--
+const data = [];
 
 // graph info for display size
 const width = 500;
 const barHeight = 20;
 const margin = 1;
 
-// create scale
-var scale = d3.scaleLinear()
-    .domain([d3.min(data),d3.max(data)])
-    .range([50,500])
+// process the data
+d3.csv("csv/bar.csv", (d) => {
+    // parse to int with +
+    data.push(+d.population)
+}).then(() => createChart());
 
-// set up the svg
-var svg = d3.select("body")
+function createChart() {
+    // set up the svg
+    var svg = d3.select("body")
     .append("svg")
     .attr("width", width)
     .attr("height", barHeight * data.length);
 
-// process the data
-var g = svg.selectAll("g")
+    // create scale
+    var scale = d3.scaleLinear()
+    .domain([d3.min(data),d3.max(data)])
+    .range([50,500])
+
+    var g = svg.selectAll("g")
     .data(data)
     .enter()
     .append("g")
     .attr("transform", (d,i) => 
         "translate(0," + i * barHeight +")");
 
-// create the bars
-g.append("rect")
-    .attr("width", d => scale(d))
-    .attr("fill", d => {
-        // color
-        if (d < 100)
-            return "green";
-        else if (d > 500)
-            return "red";
-        else
-            return "blue";
-    })
-    .attr("height", barHeight - margin );  
-    
-// append text in bars    
-g.append("text")
-    .attr("x", d => scale(d))
-    .attr("y", barHeight / 2)
-    .attr("dy", ".35em")
-    .style("text-anchor", "end")
-    .text(d => d);    
+    // create the bars
+    g.append("rect")
+        .attr("width", d => scale(d))
+        .attr("fill", d => {
+            // color
+            if (d < 100)
+                return "green";
+            else if (d > 500)
+                return "red";
+            else
+                return "blue";
+        })
+        .attr("height", barHeight - margin );  
+        
+    // append text in bars    
+    g.append("text")
+        .attr("x", d => scale(d))
+        .attr("y", barHeight / 2)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(d => d);    
+}
