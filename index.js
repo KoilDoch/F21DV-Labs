@@ -1,4 +1,6 @@
- //--EXERCISE 3, 4 and 5--
+/**********************/
+/* EXERCISE 3 & 4 & 5 */
+/**********************/
 // Creates 10 div elements
 // for(let i = 0; i < 10; i++){
 //     d3.select("body")
@@ -12,7 +14,10 @@
 // }
 // d3.select("#div0").text("start").style("color", "purple");   // change first element to purple and 'start'
 
-//--EXCERCISE 6--
+
+/**************/
+/* EXERCISE 6 */
+/**************/
 // let data =  [ {name:'test', color: "red", val:1}, 
 //         {name:'other', color: "blue", val:2},
 //         {name:'b', color: "yellow", val:3} ];
@@ -30,7 +35,10 @@
 //         return 'cont:' + d.name + " is " + d.color;    // return value is used to set the 'text'
 //     });
 
-//--EXERCISE 7--
+
+/**************/
+/* EXERCISE 7 */
+/**************/
 // let num = [10, 50, 75, 100, 200];
 
 // let paragraph = d3.select("body")
@@ -48,7 +56,10 @@
 //     return 'blue';
 // });
 
-//--EXERCISE 8--
+
+/**************/
+/* EXERCISE 8 */
+/**************/
 // var myData = ['a', 4, 1, 'b', 6, 2, 8, 9, 'z'];
 
 // var p = d3.select("body")
@@ -67,7 +78,10 @@
 //                 return "red";
 //         });
 
-//--EXERCISE 9--
+
+/**************/
+/* EXERCISE 9 */
+/**************/
 // let titaniccsv = 'https://raw.githubusercontent.com/dsindy/kaggle-titanic/master/data/test.csv';
 // let countMr = 0;
 // let class3 = 0;
@@ -84,7 +98,10 @@
 //     console.log("Number of 3rd Class Passengers: " + class3);
 // });
 
-//--EXERCISE 10--
+
+/***************/
+/* EXERCISE 10 */
+/***************/
 // let heartfailurecsv = 'https://raw.githubusercontent.com/akmand/datasets/master/heart_failure.csv';
 // // array to hold the quantity of each age group
 // let ages = [0,0,0,0];
@@ -108,7 +125,10 @@
 //         );
 // }
 
-//--Exercise 11--
+
+/***************/
+/* EXERCISE 11 */
+/***************/
 // // line coordinates [x1,x2,y1,y2]
 // var lines = [[100, 100, 100, 200], [100, 200, 200, 200], [200, 200, 200, 100], [200, 100, 100, 100]];
 // // colors associated with each line
@@ -132,19 +152,22 @@
 //         .attr("y2", (d=>d[3]))
 //         .attr("stroke", (d,i)=>color[i] );
 
-//--Exercise 12 && 13--
+
+/********************/
+/* EXERCISE 12 & 13 */
+/********************/
 // // arrays to hold each type of object
 // var circles = [];
 // var rectangles = [];
 // var ellipses = [];
-
+//
 // //Create SVG element
 // var svg = d3.select("body")
 //     .append("svg")
 //     .attr("width", 400)
 //     .attr("height", 400)
 //     .style("border", '1px solid green');
-
+//
 // d3.csv("csv/shapes.csv", (data) => {
 //     // sort the data into respective arrays
 //     switch(data.shape){
@@ -161,7 +184,7 @@
 //             break;
 //     }
 // }).then(() => {
-
+//
 //     // display the circles
 //     svg.selectAll("circles")
 //         .data(circles)
@@ -177,7 +200,7 @@
 //                 exit.remove();
 //             }
 //         );
-
+//
 //     // display the rectangles
 //     svg.selectAll("rect")
 //         .data(rectangles)
@@ -194,7 +217,7 @@
 //                 exit.remove();
 //             }
 //         );
-
+//
 //     // display the ellipses
 //     svg.selectAll("ellipse")
 //         .data(ellipses)
@@ -213,7 +236,10 @@
 //         );
 // });
 
-//--Exercise 14&15--
+
+/********************/
+/* EXERCISE 14 & 15 */
+/********************/
 // // csv file 
 // let heartfailurecsv = 'https://raw.githubusercontent.com/akmand/datasets/master/heart_failure.csv';
 // // array to hold the quantity of each age group
@@ -265,7 +291,10 @@
 //             .text(d=>d);
 //      });
 
-//--Exercise 16--
+
+/***************/
+/* EXERCISE 16 */
+/***************/
 // const width = 500;
 // const height = 500;
 
@@ -318,75 +347,131 @@
 //     .attr("font-family", "sans-serif")
 //     .text(d=>d);
 
-//--EXERCISE 17 & 18 & 19--
-// graph info for display size
-const width = 500;
-const barHeight = 20;
-const margin = 1;
 
-// returns a svg object
-const Svg = function(length) {
-    let svg = d3.select("body")
+/**************************/
+/* EXERCISE 17 & 18 & 19 * /
+/**************************/
+// graph info for display size
+// const width = 500;
+// const barHeight = 20;
+// const margin = 1;
+
+// // returns a svg object
+// const Svg = function(length) {
+//     let svg = d3.select("body")
+//     .append("svg")
+//     .attr("width", width)
+//     .attr("height", barHeight * length);
+
+//     return svg;
+// }
+
+// // returns a new scale object
+// const Scale = function(min, max) {
+//     let scale = d3.scaleLinear()
+//         .domain([min,max])
+//         .range([50,500]);
+    
+//     return scale;
+// }
+
+// function createChart(file) {
+//     const data = [];
+//     // process the data
+//     d3.csv(file, (d) => {
+//         // parse to int with +
+//         data.push(+d.population)
+//     }).then(() => {
+//         // create svg and scale
+//         let svg = Svg(data.length);
+//         let scale = Scale(d3.min(data), d3.max(data));
+
+//         // create new group
+//         let g = svg.selectAll("g")
+//             .data(data)
+//             .enter()
+//             .append("g")
+//             .attr("transform", (d,i) => 
+//                 "translate(0," + i * barHeight +")");
+
+//         // create the bars
+//         g.append("rect")
+//             .attr("width", d => scale(d))
+//             .attr("fill", d => {
+//                 // color
+//                 if (d < 5000)
+//                     return "green";
+//                 else if (d > 10000)
+//                     return "red";
+//                 else
+//                     return "blue";
+//             })
+//             .attr("height", barHeight - margin );  
+                
+//         // append text in bars    
+//         g.append("text")
+//             .attr("x", d => scale(d))
+//             .attr("y", barHeight / 2)
+//             .attr("dy", ".35em")
+//             .style("text-anchor", "end")
+//             .text(d => d);   
+//     });
+// }
+
+// // create first chart
+// createChart("csv/bar1.csv");
+// // create second chart
+// createChart("csv/bar2.csv");
+
+/***************/
+/* EXERCISE 20 */
+/***************/
+
+// size data
+const width = 400;
+const height = 300;
+
+var data = [10,15,20,25,30];
+
+// set up svg
+var svg = d3.select("body")
     .append("svg")
     .attr("width", width)
-    .attr("height", barHeight * length);
+    .attr("height", height);
 
-    return svg;
-}
+// create scales
+var xscale = d3.scaleLinear()
+    .domain([0, d3.max(data)])
+    .range([0, width-100]);
+var yscale = d3.scaleLinear()
+    .domain([0, d3.max(data)])
+    .range([height/2,0]);
 
-// returns a new scale object
-const Scale = function(min, max) {
-    let scale = d3.scaleLinear()
-        .domain([min,max])
-        .range([50,500]);
-    
-    return scale;
-}
+// create axis'
+var x_axisBot = d3.axisBottom()
+    .scale(xscale);
+var x_axisTop = d3.axisTop()
+    .scale(xscale);
+var y_axisLeft = d3.axisLeft()
+    .scale(yscale);
+var y_axisRight = d3.axisRight()
+    .scale(yscale);
 
-function createChart(file) {
-    const data = [];
-    // process the data
-    d3.csv(file, (d) => {
-        // parse to int with +
-        data.push(+d.population)
-    }).then(() => {
-        // create svg and scale
-        let svg = Svg(data.length);
-        let scale = Scale(d3.min(data), d3.max(data));
+// append the y axis'
+svg.append("g")
+    .attr("transform", "translate(50,20)")
+    .call(y_axisLeft);
+svg.append("g")
+    .attr("transform", "translate("+(width-50)+",20)")
+    .style("color", "blue")
+    .call(y_axisRight);
 
-        // create new group
-        let g = svg.selectAll("g")
-            .data(data)
-            .enter()
-            .append("g")
-            .attr("transform", (d,i) => 
-                "translate(0," + i * barHeight +")");
-
-        // create the bars
-        g.append("rect")
-            .attr("width", d => scale(d))
-            .attr("fill", d => {
-                // color
-                if (d < 5000)
-                    return "green";
-                else if (d > 10000)
-                    return "red";
-                else
-                    return "blue";
-            })
-            .attr("height", barHeight - margin );  
-                
-        // append text in bars    
-        g.append("text")
-            .attr("x", d => scale(d))
-            .attr("y", barHeight / 2)
-            .attr("dy", ".35em")
-            .style("text-anchor", "end")
-            .text(d => d);   
-    });
-}
-
-// create first chart
-createChart("csv/bar1.csv");
-// create second chart
-createChart("csv/bar2.csv");
+// append the x axis'
+var xAxisTranslate = height/2 + 20;
+svg.append("g")
+    .attr("transform", "translate(50," + xAxisTranslate + ")")
+    .call(x_axisBot)
+svg.append("g")
+    .attr("transform", "translate(50, 20)")
+    .style("color", "blue")
+    .call(x_axisTop);
