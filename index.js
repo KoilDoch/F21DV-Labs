@@ -349,9 +349,9 @@
 
 
 /**************************/
-/* EXERCISE 17 & 18 & 19 * /
+/* EXERCISE 17 & 18 & 19 & 21 * /
 /**************************/
-// graph info for display size
+//graph info for display size
 // const width = 500;
 // const barHeight = 20;
 // const margin = 1;
@@ -362,7 +362,6 @@
 //     .append("svg")
 //     .attr("width", width)
 //     .attr("height", barHeight * length);
-
 //     return svg;
 // }
 
@@ -371,7 +370,6 @@
 //     let scale = d3.scaleLinear()
 //         .domain([min,max])
 //         .range([50,500]);
-    
 //     return scale;
 // }
 
@@ -423,55 +421,115 @@
 // // create second chart
 // createChart("csv/bar2.csv");
 
+
 /***************/
 /* EXERCISE 20 */
 /***************/
+//// size data
+// const width = 400;
+// const height = 300;
 
-// size data
-const width = 400;
-const height = 300;
+// var data = [10,15,20,25,30];
 
-var data = [10,15,20,25,30];
+// // set up svg
+// var svg = d3.select("body")
+//     .append("svg")
+//     .attr("width", width)
+//     .attr("height", height);
 
-// set up svg
+// // create scales
+// var xscale = d3.scaleLinear()
+//     .domain([0, d3.max(data)])
+//     .range([0, width-100]);
+// var yscale = d3.scaleLinear()
+//     .domain([0, d3.max(data)])
+//     .range([height/2,0]);
+
+// // create axis'
+// var x_axisBot = d3.axisBottom()
+//     .scale(xscale);
+// var x_axisTop = d3.axisTop()
+//     .scale(xscale);
+// var y_axisLeft = d3.axisLeft()
+//     .scale(yscale);
+// var y_axisRight = d3.axisRight()
+//     .scale(yscale);
+
+// // append the y axis'
+// svg.append("g")
+//     .attr("transform", "translate(50,20)")
+//     .call(y_axisLeft);
+// svg.append("g")
+//     .attr("transform", "translate("+(width-50)+",20)")
+//     .style("color", "blue")
+//     .call(y_axisRight);
+
+// // append the x axis'
+// var xAxisTranslate = height/2 + 20;
+// svg.append("g")
+//     .attr("transform", "translate(50," + xAxisTranslate + ")")
+//     .call(x_axisBot)
+// svg.append("g")
+//     .attr("transform", "translate(50, 20)")
+//     .style("color", "blue")
+//     .call(x_axisTop);
+
+
+/***************/
+/* EXERCISE 21 */
+/***************/
+const margin = {top: 20, right: 30, bottom: 40, left: 90, bar: 1};
+const data = [50, 400, 300, 900, 250, 1000];
+const width = 500 - margin.left - margin.right;
+const barHeight = 20;
+
 var svg = d3.select("body")
     .append("svg")
-    .attr("width", width)
-    .attr("height", height);
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", barHeight * data.length 
+        + margin.top + margin.bottom)
+    .attr("transform", 
+        "translate(" + margin.left + ","+ margin.top+")");
 
-// create scales
+// create the x scale
 var xscale = d3.scaleLinear()
     .domain([0, d3.max(data)])
-    .range([0, width-100]);
-var yscale = d3.scaleLinear()
-    .domain([0, d3.max(data)])
-    .range([height/2,0]);
-
-// create axis'
-var x_axisBot = d3.axisBottom()
+    .range([0, width]);
+// create the x axis
+var x_axis = d3.axisBottom()
     .scale(xscale);
-var x_axisTop = d3.axisTop()
-    .scale(xscale);
-var y_axisLeft = d3.axisLeft()
-    .scale(yscale);
-var y_axisRight = d3.axisRight()
+// append x axis
+svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + 
+        barHeight * data.length +")")
+    .call(x_axis)
+
+// create the y scale using scaleband
+// using scaleband instead of scaleLinear due to 
+// the y axis being ordinal
+var yscale = d3.scaleBand()
+    .range([0, barHeight * data.length])
+    // counting backwards down the list of elements
+    .domain(data.map((d,i) => data.length - i));
+
+// create the y axis
+var y_axis = d3.axisLeft()
     .scale(yscale);
 
-// append the y axis'
+// append y axis
 svg.append("g")
-    .attr("transform", "translate(50,20)")
-    .call(y_axisLeft);
-svg.append("g")
-    .attr("transform", "translate("+(width-50)+",20)")
-    .style("color", "blue")
-    .call(y_axisRight);
-
-// append the x axis'
-var xAxisTranslate = height/2 + 20;
-svg.append("g")
-    .attr("transform", "translate(50," + xAxisTranslate + ")")
-    .call(x_axisBot)
-svg.append("g")
-    .attr("transform", "translate(50, 20)")
-    .style("color", "blue")
-    .call(x_axisTop);
+    .attr("transform", "translate(" + margin.left + ",0)")
+    .call(y_axis)
+    
+// add the rectangle
+svg.selectAll("rect")
+    .data(data)
+    .enter()
+    .append("rect")
+    // make sure they start on the 0
+    .attr("x", xscale(0) + margin.left)
+    .attr("y", (d,i) => i * barHeight)
+    // scale is now based on the xscale
+    .attr("width", d => xscale(d))
+    .attr("height", barHeight)
+    .attr("fill", "blue");
