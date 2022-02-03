@@ -214,54 +214,108 @@
 // });
 
 //--Exercise 14&15--
-// csv file 
-let heartfailurecsv = 'https://raw.githubusercontent.com/akmand/datasets/master/heart_failure.csv';
-// array to hold the quantity of each age group
-let ages = [0,0,0,0];
-var barWidth = 50;
-var scaleFactor = 2;
-var height = 400;
+// // csv file 
+// let heartfailurecsv = 'https://raw.githubusercontent.com/akmand/datasets/master/heart_failure.csv';
+// // array to hold the quantity of each age group
+// let ages = [0,0,0,0];
+// var barWidth = 50;
+// var scaleFactor = 2;
+// var height = 400;
 
-d3.csv(heartfailurecsv, (data) => {
-        // sort the ages into respective array index
-         if (data.age < 31) { ages[0]++; } else 
-         if (data.age < 41) { ages[1]++; } else 
-         if (data.age < 61) { ages[2]++; } else 
-         if (data.age < 101) { ages[3]++; }
-     }).then( () => {
-        console.log(ages);
+// d3.csv(heartfailurecsv, (data) => {
+//         // sort the ages into respective array index
+//          if (data.age < 31) { ages[0]++; } else 
+//          if (data.age < 41) { ages[1]++; } else 
+//          if (data.age < 61) { ages[2]++; } else 
+//          if (data.age < 101) { ages[3]++; }
+//      }).then( () => {
+//         console.log(ages);
 
-        // create the svg
-        var graph = d3.select("body")
-            .append("svg")
-            .attr("width",barWidth*ages.length)
-            .attr("height", height);
+//         // create the svg
+//         var graph = d3.select("body")
+//             .append("svg")
+//             .attr("width",barWidth*ages.length)
+//             .attr("height", height);
 
-        // create the bar
-        var bar = graph.selectAll("g")
-            .data(ages)
-            .enter()
-            .append("g")
-            .attr("transform", (d,i) =>
-                "translate("+i*barWidth+",0)");
+//         // create the bar
+//         var bar = graph.selectAll("g")
+//             .data(ages)
+//             .enter()
+//             .append("g")
+//             .attr("transform", (d,i) =>
+//                 "translate("+i*barWidth+",0)");
 
-        // add the bar
-        bar.append("rect")
-            .attr("width", barWidth-1)
-            .attr("y", (d)=>height-(d*scaleFactor))
-            .attr("height", d => d * scaleFactor)
-            .style("fill", (d) => {
-                // if the data is extreme (>150), bar is red
-                if(d > 150)
-                    return "red";
-            });
+//         // add the bar
+//         bar.append("rect")
+//             .attr("width", barWidth-1)
+//             .attr("y", (d)=>height-(d*scaleFactor))
+//             .attr("height", d => d * scaleFactor)
+//             .style("fill", (d) => {
+//                 // if the data is extreme (>150), bar is red
+//                 if(d > 150)
+//                     return "red";
+//             });
 
-        // add the text
-        bar.append("text")
-            .attr("x", barWidth / 2)
-            .attr("y", (d)=>height-d*scaleFactor)
-            .attr("dx", ".35em")
-            .style("fill", "black")
-            .text(d=>d);
-     });
+//         // add the text
+//         bar.append("text")
+//             .attr("x", barWidth / 2)
+//             .attr("y", (d)=>height-d*scaleFactor)
+//             .attr("dx", ".35em")
+//             .style("fill", "black")
+//             .text(d=>d);
+//      });
+
+//--Exercise 16--
+const width = 500;
+const height = 500;
+
+const data = [10, 15, 20, 25, 30];
+// Note different valid ways of specifying color
+const colors = ["#ffffcc","red","rgb(0,255,0","#31a354","#006837"];
+
+// create svg
+const svg = d3.select("body")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+
+// process data
+const g = svg.selectAll("g")
+    .data(data)
+    .enter()
+    .append("g")
+    .attr("transform", (d,i) => {
+        return "translate(0,0)";
+    })
+
+// append circles
+// for data with values of 20 or less, use circles
+g.filter(d=>d<=20)
+    .append("circle")
+    .attr("cx", (d,i) => i*100+45)
+    .attr("cy", (d,i) => 100)
+    .attr("r", d => d*1.5)
+    .attr("fill", (d,i) => colors[i]);
+
+// append rect
+// for data with values greater than 20, use rectangles
+g.filter(d=>d>20)
+    .append("rect")
+    // since the filter has reduced selection size
+    // (i+3) compensates for the missing elements
+    .attr("x", (d,i) => (i+3)*100+20)
+    .attr("y", (d,i) => 100-(d))
+    .attr("width", d=>d*2)
+    .attr("height", d=>d*2)
+    .attr("fill", (d,i) => colors[i+3]);
+
+// append text
+g.append("text")
+    .attr("x", (d,i) => i*100+40)
+    .attr("y", 105)
+    .attr("stroke", "teal")
+    .attr("font-size", "12px")
+    .attr("font-family", "sans-serif")
+    .text(d=>d);
+
 
