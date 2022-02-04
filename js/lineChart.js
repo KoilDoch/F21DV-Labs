@@ -10,15 +10,15 @@ const yMax = ySize - margin * 2;
 
 // Creates a new chart
 function chart() {
-    let obj = {}
-    let objdata = [];
-    let lines = [];
-    let cols = [];
-    let svg;
-    let x;
-    let y;
-    let xExtent;
-    let yExtent;
+    let obj = {}        // obj to return
+    let objdata = [];   // holds the raw data from csv files
+    let lines = [];     // holds the processed data
+    let cols = [];      // holds the color data
+    let svg;            // holds the svg data
+    let x;              // holds the x scale
+    let y;              // holds the y scale
+    let xExtent;        // holds the lower and upper limits of x values
+    let yExtent;        // holds the lower and upper limits of y values
 
     // set the data held in the chart
     obj.setdata = (file) => {
