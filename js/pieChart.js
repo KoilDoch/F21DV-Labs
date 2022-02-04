@@ -22,7 +22,7 @@ function PieChart() {
 
     // create the svg
     obj.createSvg = () => {
-        svg = d3.select("body")
+        svg = d3.select(".pie-chart")
             .append("svg")
             .attr('width', xSize )
             .attr('height', ySize )

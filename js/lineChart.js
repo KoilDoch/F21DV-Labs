@@ -52,7 +52,7 @@ function chart() {
     obj.createCanvas = () => {
 
         // create the svg and append it to the body
-        svg = d3.select("body")
+        svg = d3.select(".line-chart")
             .append("svg")
             .attr("width", xSize)
             .attr("height", ySize)

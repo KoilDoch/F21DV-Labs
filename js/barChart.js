@@ -20,7 +20,7 @@ function BarChart() {
     }
 
     obj.createSvg = () => {
-        svg = d3.select("body")
+        svg = d3.select(".bar-chart")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", barHeight * data.length 
