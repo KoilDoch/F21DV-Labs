@@ -33,7 +33,7 @@ function BarChart() {
             .attr("x", margin.left)
             .attr('width', width)
             .attr('height', barHeight * data.length)
-            .attr("xlink:href", "bubble.jpg")
+            .attr("xlink:href", "bar.png")
             // if this is not specified it will not stretch
             .attr("preserveAspectRatio", "none");
     }
