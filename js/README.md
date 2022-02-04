@@ -1,29 +1,28 @@
 # This folder holds the javascript files corrosponding to each exercise in lab 1.
 
-## Files, Alphabetically
-### axis.js
+## axis.js
 Exercise.20
 Demonstration of creating 4 axes on an svg
 
-### barChart.js
+## barChart.js
 Exercises 21, 28 and 32
 Demonstration of a bar chart.
 Includes an axis, generated color for the bars and an image background.
 
-### basicDisplayData.js
+## basicDisplayData.js
 Exercise 6
 Demonstrating the use of objects within the data set
 
-### basicParagraph.js
+## basicParagraph.js
 Exercise 3, 4 and 5
 Demonstration of change attributes of paragraph elements
 
-### circleAndRect.js
+## circleAndRect.js
 Exercise 16
 Using data to demonstrate filtering.
 Based on the value of data either circles or rectangles are drawn to the svg
 
-### dataBoundaries.js
+## dataBoundaries.js
 Exercise 7
 Demonstrating the ability to do different things with the data depending on its value
 
