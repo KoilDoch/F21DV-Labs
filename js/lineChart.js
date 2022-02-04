@@ -143,6 +143,8 @@ function chart() {
                     .attr("cy", function (d) { return y(d.y) } )
                     .attr("r", 2)
                     .style("fill", (d,i) => cols[1](i))
+
+        
         
         // append the text
         dotGroup.selectAll()
@@ -154,9 +156,8 @@ function chart() {
                 .text(d => `(x: ${d.x} , y: ${d.y})`)
                 .attr("x", function (d) { return x(d.x) } )
                 .attr("y", function (d) { return y(d.y) } )
-                .attr("font-size", "8px");
-                
-
+                .attr("font-size", "8px")
+            
         // append the triangle dots
         dotGroup.selectAll()
                 .data((d) => d[1])

@@ -82,8 +82,9 @@ function BarChart() {
         // add the rectangle
         var rects = svg.selectAll(".bar")
             .data(data)
-            .enter();
-
+            .enter()
+            .append("g");
+                
         rects.append("rect")
             .attr("class", "bar")
             // make sure they start on the 0
@@ -92,8 +93,9 @@ function BarChart() {
             // scale is now based on the xscale
             .attr("width", d => xscale(+d.population))
             .attr("height", barHeight - margin.bar)
-            .attr("fill", (d,i) => {return color(i)});
+            .attr("fill", (d,i) => {return color(i)}) 
     }
+
     return obj;
 }
 
