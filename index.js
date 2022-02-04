@@ -535,9 +535,9 @@
 //     .attr("fill", "blue");
 
 
-/******************************/
-/* EXERCISE 22 & 23 & 24 & 27 */
-/******************************/
+/****************************************/
+/* EXERCISE 22 & 23 & 24 & 25 & 26 & 27 */
+/****************************************/
 // Set Dimensions
 const xSize = 600;
 const ySize = 600;
@@ -573,6 +573,7 @@ function chart() {
             // create the axis
             obj.createAxis();
 
+            // draw the lines
             obj.drawLine();
         })
     }
@@ -642,22 +643,36 @@ function chart() {
         var dotGroup = svg.selectAll("dot")
                 .data(lines)
                 .enter()
-                .append("g")
+                .append("g");
                
         // append the circle dots
-        var circleDots = dotGroup.selectAll()
+        dotGroup.selectAll()
                 .data((d) => d[1])
                 .enter()
                 // filter for only line 0
                 .filter(d => d.id == 0)
                 .append("circle")
+                    .attr("class", "circle-marker")
                     .attr("cx", function (d) { return x(d.x) } )
                     .attr("cy", function (d) { return y(d.y) } )
                     .attr("r", 2)
-                    .style("fill", "red");
+                    .style("fill", "red")
+        
+        // append the text
+        dotGroup.selectAll()
+            .data((d) => d[1])
+                .enter()
+                // filter for only line 0 and every 5 elements
+                .filter((d,i) => (d.id == 0) && (i % 5 == 0))
+                .append("text")
+                .text(d => `(x: ${d.x} , y: ${d.y})`)
+                .attr("x", function (d) { return x(d.x) } )
+                .attr("y", function (d) { return y(d.y) } )
+                .attr("font-size", "8px");
+                
 
         // append the triangle dots
-        var triangleDots = dotGroup.selectAll()
+        dotGroup.selectAll()
                 .data((d) => d[1])
                 .enter()
                 // filter only for line 1
