@@ -9,15 +9,16 @@ function BarChart() {
     const width = 500 - margin.left - margin.right;                         //
     const barHeight = 40;
     let svg;
-    let x_axis, y_axis, xscale, yscale;
-    // colors associated with each bar
-    var color = d3.scaleLinear().domain([1,data.length]).range(["blue","green"]);
+    let x_axis, y_axis, xscale, yscale, color;
 
     // set data according to the csv
     obj.setData = (file) => {
         d3.csv(file, (d) => {
             data.push(d);
         }).then( () => {
+            // colors associated with each bar
+            color = d3.scaleOrdinal().domain(data).range(["red","blue","green","yellow"]);
+
             obj.createSvg();
             obj.createScale();
             obj.createBars();
@@ -91,7 +92,7 @@ function BarChart() {
             // scale is now based on the xscale
             .attr("width", d => xscale(+d.population))
             .attr("height", barHeight - margin.bar)
-            .attr("fill", (d,i) => color(i));
+            .attr("fill", (d,i) => {return color(i)});
     }
     return obj;
 }
