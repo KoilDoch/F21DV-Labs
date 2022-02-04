@@ -3,20 +3,25 @@
 /************************/
 
 function BarChart() {
-    let obj = {}
-    const margin = {top: 20, right: 30, bottom: 40, left: 45, bar: 1};
-    const data = [400, 300, 900, 250, 55, 100, 205, 500 ,671, 1000];
-    const width = 500 - margin.left - margin.right;
-    const barHeight = 20;
+    let obj = {}                                                            //  holds object to be returned
+    const margin = {top: 20, right: 30, bottom: 40, left: 60, bar: 1};      // holds the margin data
+    const data = [];         //
+    const width = 500 - margin.left - margin.right;                         //
+    const barHeight = 40;
     let svg;
     let x_axis, y_axis, xscale, yscale;
     // colors associated with each bar
     var color = d3.scaleLinear().domain([1,data.length]).range(["blue","green"]);
 
-    obj.setUpChart = () => {
-        obj.createSvg();
-        obj.createScale();
-        obj.createBars();
+    // set data according to the csv
+    obj.setData = (file) => {
+        d3.csv(file, (d) => {
+            data.push(d);
+        }).then( () => {
+            obj.createSvg();
+            obj.createScale();
+            obj.createBars();
+        });
     }
 
     obj.createSvg = () => {
@@ -41,12 +46,13 @@ function BarChart() {
     obj.createScale = () => {
         // create the x scale
         xscale = d3.scaleLinear()
-            .domain([0, d3.max(data)])
+            .domain([0, d3.max(data, d=>+d.population)])
             .range([0, width]);
 
         // create the x axis
         x_axis = d3.axisBottom()
             .scale(xscale);
+            
         // append x axis
         svg.append("g")
             .attr("transform", "translate(" + margin.left + "," + 
@@ -59,7 +65,7 @@ function BarChart() {
         yscale = d3.scaleBand()
             .range([0, barHeight * data.length])
             // counting backwards down the list of elements
-            .domain(data.map((d,i) => data.length - i));
+            .domain(data.map(d => d.city));
 
         // create the y axis
         y_axis = d3.axisLeft()
@@ -81,16 +87,14 @@ function BarChart() {
             .attr("class", "bar")
             // make sure they start on the 0
             .attr("x", xscale(0) + margin.left)
-            .attr("y", (d,i) => i * barHeight)
+            .attr("y", (d,i) => { return i * barHeight})
             // scale is now based on the xscale
-            .attr("width", d => xscale(d))
-            .attr("height", barHeight)
+            .attr("width", d => xscale(+d.population))
+            .attr("height", barHeight - margin.bar)
             .attr("fill", (d,i) => color(i));
     }
-    
-
     return obj;
 }
 
 var barChart = BarChart();
-barChart.setUpChart();
+barChart.setData("csv/bar1.csv");
