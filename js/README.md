@@ -79,8 +79,6 @@ One line has attached text with every 15th point.
 
 A graphic is also attached as a background.
 
-
-
 ## multipleBar.js [1: Bar][4]
 Exercises 17, 18, 19 and 21
 
