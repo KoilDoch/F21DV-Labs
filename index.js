@@ -535,9 +535,9 @@
 //     .attr("fill", "blue");
 
 
-/*************************/
-/* EXERCISE 22 & 23 & 24 */
-/*************************/
+/******************************/
+/* EXERCISE 22 & 23 & 24 & 27 */
+/******************************/
 // Set Dimensions
 const xSize = 600;
 const ySize = 600;
@@ -637,8 +637,23 @@ function chart() {
                         .y((d) => { return y(d.y)})
                         (d[1]); // since key/value array, [1] is used to access the value
                 });
-    }
 
+        // group for the dots
+        var dotGroup = svg.selectAll("dot")
+                .data(lines)
+                .enter()
+                .append("g");
+               
+        // append the dots
+        var dots = dotGroup.selectAll()
+                .data((d) => d[1])
+                .enter()
+                .append("circle")
+                    .attr("cx", function (d) { return x(d.x) } )
+                    .attr("cy", function (d) { return y(d.y) } )
+                    .attr("r", 2)
+                    .style("fill", "red");
+    }
     return obj;
 }
 
@@ -646,3 +661,4 @@ function chart() {
 var c = chart();
 c.createCanvas();
 c.setdata("csv/line.csv");
+
