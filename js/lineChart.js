@@ -22,6 +22,7 @@ function chart() {
 
     // set the data held in the chart
     obj.setdata = (file) => {
+        // load the data from a file
         d3.csv(file, (data) => {
             objdata.push(data);
         }).then(() => {
@@ -30,7 +31,8 @@ function chart() {
             xExtent = d3.extent( objdata, d=> +d.x);
             yExtent = d3.extent( objdata, d=> +d.y);
 
-            // organise the object data into lines 
+            // organise the object data into lines
+            // currently are set as object, this groups them in a key/value fashion
             lines = d3.group(objdata, d => d.id);
 
             // Set colors to be used
@@ -48,6 +50,8 @@ function chart() {
 
     // Append SVG object to the page
     obj.createCanvas = () => {
+
+        // create the svg and append it to the body
         svg = d3.select("body")
             .append("svg")
             .attr("width", xSize)
@@ -67,43 +71,49 @@ function chart() {
 
     // create the axis
     obj.createAxis = () => {
+
         // X Axis
         x = d3.scaleLinear()
+            // scale from the lowest and highest value of the x values
             .domain([xExtent[0], xExtent[1]])
             .range([0, xMax]);
 
-        // bottom
+        // append bottom
         svg.append("g")
+            // align with the bottom
             .attr("transform", "translate(0," + yMax + ")")
             .call(d3.axisBottom(x))
             .attr("color", "green");    // make bottom axis green
 
-        // top
+        // append top
         svg.append("g")
             .call(d3.axisTop(x));
 
         // Y Axis
         y = d3.scaleLinear()
+        // scale from the lowest and highest value of the y values
             .domain([ yExtent[0], yExtent[1]])
             .range([yMax,0]);
 
-        // left y axis
+        // append left y axis
         svg.append("g")
             .call(d3.axisLeft(y));
 
-        // right y axis
+        // append right y axis
         svg.append("g")
+            // align with the right side
             .attr("transform", `translate(${yMax},0)`)
             .call(d3.axisRight(y));
     }
 
     obj.drawLine = () => {
-        // Add the line
+
+        // Add lines
         svg.selectAll(".line")
             .data(lines)
             .enter()
             .append("g")
-            .attr("class", (d,i) => {return "line"+i;})
+            .attr("class", (d,i) => {return "line"+i;})     // assign class to line group
             .append("path")
                 .attr("fill", "none")
                 .attr("stroke", (d,i) => cols[0](i))
