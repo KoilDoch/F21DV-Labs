@@ -69,9 +69,16 @@ Processing of data from an external csv
 Exercises 22, 23, 24, 25, 26 and 27
 
 Using data generated from csv files to draw mutliple lines on a singular line chart.
+
 The lines are colored using generated values.
-Each line also contains markers which show the data points of each entry.
-One line has attached text with every 5th point.
+
+Each line also contains markers which show the data 
+points of each entry.
+
+One line has attached text with every 15th point.
+
+A graphic is also attached as a background.
+
 
 
 ## multipleBar.js [1: Bar][4]

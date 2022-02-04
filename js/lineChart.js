@@ -55,6 +55,14 @@ function chart() {
             .append("g")
             .attr("transform", "translate(" + margin + "," +
                 margin + ")");
+
+        // append an image to the svg
+        svg.append("image")
+            .attr('width', xSize - 80)
+            .attr('height', ySize - 80)
+            .attr("xlink:href", "line.png")
+            // if this is not specified it will not stretch
+            .attr("preserveAspectRatio", "none");
     }
 
     // create the axis
@@ -131,7 +139,7 @@ function chart() {
             .data((d) => d[1])
                 .enter()
                 // filter for only line 0 and every 5 elements
-                .filter((d,i) => (d.id == 0) && (i % 5 == 0))
+                .filter((d,i) => (d.id == 0) && (i % 15 == 0))
                 .append("text")
                 .text(d => `(x: ${d.x} , y: ${d.y})`)
                 .attr("x", function (d) { return x(d.x) } )
