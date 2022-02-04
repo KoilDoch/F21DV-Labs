@@ -705,7 +705,7 @@
 /***************/
 /* EXERCISE 30 */
 /***************/
-var data = [13, 14, 18, 22, 26, 200, 24, 28, 32, 36, 40, 84];
+var data = [15, 14, 18, 22, 11, 36, 7, 12, 28, 4, 30, 10];
 const xSize = 400; const ySize = 400;
 const margin = 40;
 const xMax = xSize - margin*2;
@@ -743,3 +743,9 @@ arcs.append("path")
     return color(i);
     })
     .attr("d", arc);
+
+// add text to arc
+arcs.append("text")
+    .text(d => d.value)
+        .attr("transform", (d) => { return "translate(" + arc.centroid(d) + ")"})
+        .attr("font-size", "16px");
