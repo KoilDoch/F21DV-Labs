@@ -475,66 +475,77 @@
 //     .call(x_axisTop);
 
 
-/*******************/
-/* EXERCISE 21 & 28*/
-/*******************/
-// const margin = {top: 20, right: 30, bottom: 40, left: 45, bar: 1};
-// const data = [50, 400, 300, 900, 250, 55, 100, 205, 500 ,671, 1000];
-// const width = 500 - margin.left - margin.right;
-// const barHeight = 20;
-// // colors associated with each bar
-// var color = d3.scaleLinear().domain([1,data.length]).range(["blue","green"]);
+/************************/
+/* EXERCISE 21 & 28 & 32*/
+/************************/
+const margin = {top: 20, right: 30, bottom: 40, left: 45, bar: 1};
+const data = [400, 300, 900, 250, 55, 100, 205, 500 ,671, 1000];
+const width = 500 - margin.left - margin.right;
+const barHeight = 20;
+// colors associated with each bar
+var color = d3.scaleLinear().domain([1,data.length]).range(["blue","green"]);
 
-// var svg = d3.select("body")
-//     .append("svg")
-//     .attr("width", width + margin.left + margin.right)
-//     .attr("height", barHeight * data.length 
-//         + margin.top + margin.bottom)
-//     .attr("transform", 
-//         "translate(" + margin.left + ","+ margin.top+")");
+var svg = d3.select("body")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", barHeight * data.length 
+        + margin.top + margin.bottom)
+    .attr("transform", 
+        "translate(" + margin.left + ","+ margin.top+")");
 
-// // create the x scale
-// var xscale = d3.scaleLinear()
-//     .domain([0, d3.max(data)])
-//     .range([0, width]);
-// // create the x axis
-// var x_axis = d3.axisBottom()
-//     .scale(xscale);
-// // append x axis
-// svg.append("g")
-//     .attr("transform", "translate(" + margin.left + "," + 
-//         barHeight * data.length +")")
-//     .call(x_axis)
+// append an image to the svg
+svg.append("image")
+    .attr("x", margin.left)
+    .attr('width', width)
+    .attr('height', barHeight * data.length)
+    .attr("xlink:href", "bubble.jpg")
+    // if this is not specified it will not stretch
+    .attr("preserveAspectRatio", "none");
 
-// // create the y scale using scaleband
-// // using scaleband instead of scaleLinear due to 
-// // the y axis being ordinal
-// var yscale = d3.scaleBand()
-//     .range([0, barHeight * data.length])
-//     // counting backwards down the list of elements
-//     .domain(data.map((d,i) => data.length - i));
+// create the x scale
+var xscale = d3.scaleLinear()
+    .domain([0, d3.max(data)])
+    .range([0, width]);
+// create the x axis
+var x_axis = d3.axisBottom()
+    .scale(xscale);
+// append x axis
+svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + 
+        barHeight * data.length +")")
+    .call(x_axis)
 
-// // create the y axis
-// var y_axis = d3.axisLeft()
-//     .scale(yscale);
+// create the y scale using scaleband
+// using scaleband instead of scaleLinear due to 
+// the y axis being ordinal
+var yscale = d3.scaleBand()
+    .range([0, barHeight * data.length])
+    // counting backwards down the list of elements
+    .domain(data.map((d,i) => data.length - i));
 
-// // append y axis
-// svg.append("g")
-//     .attr("transform", "translate(" + margin.left + ",0)")
-//     .call(y_axis)
+// create the y axis
+var y_axis = d3.axisLeft()
+    .scale(yscale);
+
+// append y axis
+svg.append("g")
+    .attr("transform", "translate(" + margin.left + ",0)")
+    .call(y_axis)
     
-// // add the rectangle
-// svg.selectAll("rect")
-//     .data(data)
-//     .enter()
-//     .append("rect")
-//     // make sure they start on the 0
-//     .attr("x", xscale(0) + margin.left)
-//     .attr("y", (d,i) => i * barHeight)
-//     // scale is now based on the xscale
-//     .attr("width", d => xscale(d))
-//     .attr("height", barHeight)
-//     .attr("fill", (d,i) => color(i));
+// add the rectangle
+var rects = svg.selectAll(".bar")
+    .data(data)
+    .enter();
+
+rects.append("rect")
+    .attr("class", "bar")
+    // make sure they start on the 0
+    .attr("x", xscale(0) + margin.left)
+    .attr("y", (d,i) => i * barHeight)
+    // scale is now based on the xscale
+    .attr("width", d => xscale(d))
+    .attr("height", barHeight)
+    .attr("fill", (d,i) => color(i));
 
 
 /****************************************/
@@ -702,50 +713,50 @@
 // c.setdata("csv/line.csv");
 
 
-/***************/
-/* EXERCISE 30 */
-/***************/
-var data = [15, 14, 18, 22, 11, 36, 7, 12, 28, 4, 30, 10];
-const xSize = 400; const ySize = 400;
-const margin = 40;
-const xMax = xSize - margin*2;
-const yMax = ySize - margin*2;
+/********************/
+/* EXERCISE 30 & 31 */
+/********************/
+// var data = [15, 14, 18, 22, 11, 36, 7, 12, 28, 4, 30, 10];
+// const xSize = 400; const ySize = 400;
+// const margin = 40;
+// const xMax = xSize - margin*2;
+// const yMax = ySize - margin*2;
 
-// Append SVG Object to the Page
-const svg = d3.select("body")
-    .append("svg")
-    .attr('width', xSize )
-    .attr('height', ySize )
-    .append("g")
-    .attr("transform","translate(" + xSize/2 + "," + ySize/2 + ")");
+// // Append SVG Object to the Page
+// const svg = d3.select("body")
+//     .append("svg")
+//     .attr('width', xSize )
+//     .attr('height', ySize )
+//     .append("g")
+//     .attr("transform","translate(" + xSize/2 + "," + ySize/2 + ")");
 
-const radius = Math.min(xSize, ySize) / 2;
-var color = d3.scaleOrdinal().domain(data).range(d3.schemeSet1);
+// const radius = Math.min(xSize, ySize) / 2;
+// var color = d3.scaleOrdinal().domain(data).range(d3.schemeSet1);
 
-// Generate the pie
-var pie = d3.pie();
+// // Generate the pie
+// var pie = d3.pie();
 
-// Generate the arcs
-var arc = d3.arc()
-    .innerRadius(0)
-    .outerRadius(radius);
+// // Generate the arcs
+// var arc = d3.arc()
+//     .innerRadius(0)
+//     .outerRadius(radius);
 
-//Generate groups
-var arcs = svg.selectAll("arc")
-    .data(pie(data))
-    .enter()
-    .append("g")
-    .attr("class", "arc")
+// //Generate groups
+// var arcs = svg.selectAll("arc")
+//     .data(pie(data))
+//     .enter()
+//     .append("g")
+//     .attr("class", "arc")
 
-//Draw arc paths
-arcs.append("path")
-    .attr("fill", function(d, i) {
-    return color(i);
-    })
-    .attr("d", arc);
+// //Draw arc paths
+// arcs.append("path")
+//     .attr("fill", function(d, i) {
+//     return color(i);
+//     })
+//     .attr("d", arc);
 
-// add text to arc
-arcs.append("text")
-    .text(d => d.value)
-        .attr("transform", (d) => { return "translate(" + arc.centroid(d) + ")"})
-        .attr("font-size", "16px");
+// // add text to arc
+// arcs.append("text")
+//     .text(d => d.value)
+//         .attr("transform", (d) => { return "translate(" + arc.centroid(d) + ")"})
+//         .attr("font-size", "16px");
