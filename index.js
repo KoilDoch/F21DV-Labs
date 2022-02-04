@@ -705,7 +705,7 @@
 /***************/
 /* EXERCISE 30 */
 /***************/
-var data = [3, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44];
+var data = [13, 14, 18, 22, 26, 200, 24, 28, 32, 36, 40, 84];
 const xSize = 400; const ySize = 400;
 const margin = 40;
 const xMax = xSize - margin*2;
@@ -720,7 +720,7 @@ const svg = d3.select("body")
     .attr("transform","translate(" + xSize/2 + "," + ySize/2 + ")");
 
 const radius = Math.min(xSize, ySize) / 2;
-var color = d3.scaleOrdinal(['#4daf4a','#377eb8','#ff7f00','#984ea3','#e41a1c']);
+var color = d3.scaleOrdinal().domain(data).range(d3.schemeSet1);
 
 // Generate the pie
 var pie = d3.pie();
