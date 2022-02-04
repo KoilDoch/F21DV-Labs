@@ -642,16 +642,33 @@ function chart() {
         var dotGroup = svg.selectAll("dot")
                 .data(lines)
                 .enter()
-                .append("g");
+                .append("g")
                
-        // append the dots
-        var dots = dotGroup.selectAll()
+        // append the circle dots
+        var circleDots = dotGroup.selectAll()
                 .data((d) => d[1])
                 .enter()
+                // filter for only line 0
+                .filter(d => d.id == 0)
                 .append("circle")
                     .attr("cx", function (d) { return x(d.x) } )
                     .attr("cy", function (d) { return y(d.y) } )
                     .attr("r", 2)
+                    .style("fill", "red");
+
+        // append the triangle dots
+        var triangleDots = dotGroup.selectAll()
+                .data((d) => d[1])
+                .enter()
+                // filter only for line 1
+                .filter(d => d.id == 1)
+                .append("path")
+                    // add the triangle symbol
+                    .attr("d", d3.symbol()
+                            .type(d3.symbolTriangle)
+                            .size(15))
+                    .attr("transform", function (d) { 
+                        return `translate(${x(d.x)},${y(d.y)})`})
                     .style("fill", "red");
     }
     return obj;
