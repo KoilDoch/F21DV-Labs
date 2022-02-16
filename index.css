@@ -19,7 +19,7 @@ svg text {
 /*********************/
 /* Lab 2: EXERCISE 1 */
 /*********************/
-.pulse { 
+.circle-marker { 
   border: 1px solid blue; 
   fill: lightblue; 
   stroke: purple; 
@@ -29,7 +29,7 @@ svg text {
   transform-origin: 50% 50%; 
 } 
  
-.pulse:hover 
+.circle-marker:hover 
 { 
   -webkit-animation-name: pulsar; 
   -webkit-animation-duration: 0.2s; 
@@ -43,13 +43,13 @@ svg text {
   transform-origin: 50% 50%;  
 } 
  
-@keyframes pulsar { 
+@keyframes circle-marker { 
   from { 
       fill: red; 
   } 
   to { 
       fill: red; 
-      transform: scale(1.3,1.3); 
+      transform: scale(2,2); 
       transform-origin: 50% 50%; 
   } 
 }  

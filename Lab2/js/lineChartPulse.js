@@ -50,8 +50,6 @@ const line = d3.line()
     .x(function (d) { return xScale(d.x)})
     .y(function (d) { return yScale(d.y)});
 
-
-
 //******************** DRAWING ********************//
 //---------- AXES ----------//
 svg.append("g")
@@ -75,4 +73,15 @@ lines.append("path")
     .attr("d", function(d) {
         return line(d[1]);  // pass the map values
     });
+
+//---------- CIRCLES ----------//
+lines.selectAll("circles")
+    .data(d => d[1])
+    .enter()
+    .append("circle")
+        .attr("class", "circle-marker")
+        .attr("cx", function (d) { return xScale(d.x) } )
+        .attr("cy", function (d) { return yScale(d.y) } )
+        .attr("r", 3);
+
 });
