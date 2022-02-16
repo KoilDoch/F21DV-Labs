@@ -1,21 +1,22 @@
 
 //******************** PREPARING ********************//
 //---------- SVG ----------//
-const width = 960;
-const height = 500;
-const margin = 40;
+const width = 700;
+const height = 300;
+const margin = 5;
 const padding = 5;
 const adj = 30
 
+// set up the svg canvas object
 const svg = d3.select("div#container")
     .append("svg")
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", "-"
-        + adj + " -"
-        + adj + " "
-        + (width + adj * 3) + " "
-        + (height + adj * 3))
-    .style("padding", padding)
+          + adj + " -"
+          + adj + " "
+          + (width + adj *3) + " "
+          + (height + adj*3))
+    .attr("padding", padding)
     .style("margin", margin);
 
 //---------- DATA ----------//
@@ -54,7 +55,7 @@ const line = d3.line()
 //---------- AXES ----------//
 svg.append("g")
     .attr("class", "axis")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", `translate(0,${height})`)
     .call(xAxis);
 svg.append("g")
     .attr("class", "axis")
@@ -82,6 +83,5 @@ lines.selectAll("circles")
         .attr("class", "circle-marker")
         .attr("cx", function (d) { return xScale(d.x) } )
         .attr("cy", function (d) { return yScale(d.y) } )
-        .attr("r", 3);
-
+        .attr("r", 2);
 });
