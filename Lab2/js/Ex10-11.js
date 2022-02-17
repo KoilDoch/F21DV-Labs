@@ -12,7 +12,17 @@ var svg = d3.select("body")
     // follow the mouse with text
     .on("mousemove", followMouse)
     // remove when leaving svg
-    .on("mouseout", () => svg.select("text").remove());
+    .on("mouseout", () => svg.select("#follow").remove());
+
+svg.append("text")
+    .attr("id", "dynText")
+    .attr("x", 10)
+    .attr("y", 10)
+    .attr("font-size", "12px")
+    .attr("font-family", "sans-serif")
+    .text("Hover over me!")
+    .on("mouseover", hoverText)
+    .on("mouseout", hoverAwayText);
 
 svg.append("circle")
     .attr("cx", width/2)
@@ -25,11 +35,12 @@ svg.append("circle")
 // follows the mouse with a text element
 function followMouse(event) {
     // remove old text
-    svg.select("text").remove();
+    svg.select("#follow").remove();
     // get the coords
     coords = d3.pointer(event);
     // create text element
     svg.append("text")
+        .attr("id", "follow")
         .style("opacity", 1)
         .attr("x", coords[0]+10)
         .attr("y", coords[1])
@@ -55,4 +66,26 @@ function shrinkCircle() {
         .ease(d3.easeBounce)
         .duration(1000)
         .attr("r", radius);
+}
+
+// grow the text on mouse over, change color => red
+function hoverText() {
+    d3.select(this)
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(100)
+        .attr("y", 30)
+        .attr("fill", "red")
+        .attr("font-size", "24px");
+}
+
+// shrink text on mouse away, change color => black
+function hoverAwayText() {
+    d3.select(this)
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(100)
+        .attr("y", 10)
+        .attr("fill", "black")
+        .attr("font-size", "12px");
 }
