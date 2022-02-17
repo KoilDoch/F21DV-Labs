@@ -14,13 +14,13 @@ var svg = d3.select("body")
     // remove when leaving svg
     .on("mouseout", () => svg.select("text").remove());
 
-    svg.append("circle")
-        .attr("cx", width/2)
-        .attr("cy", height/2)
-        .attr("r", 10)
-        .attr("fill", "red")
-        .on("mouseover", () => d3.select("circle").attr("r", radius*10))    // grow circle 10x its radius
-        .on("mouseout", () => d3.select("circle").attr("r", radius));       // change its radius back to default
+svg.append("circle")
+    .attr("cx", width/2)
+    .attr("cy", height/2)
+    .attr("r", 10)
+    .attr("fill", "red")
+    .on("mouseover", () => d3.select("circle").attr("r", radius*10))    // grow circle 10x its radius
+    .on("mouseout", () => d3.select("circle").attr("r", radius));       // change its radius back to default
 
 // follows the mouse with a text element
 function followMouse(event) {
