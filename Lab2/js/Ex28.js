@@ -1,5 +1,6 @@
 // size variables
 var width = 400, height = 400; 
+var simulation;
  
 // setup svg 
 d3.select('body').append('svg').attr('width',width).attr('height',height); 
@@ -17,7 +18,7 @@ dataset.then((data) => {
     var cols = d3.scaleOrdinal().domain([1,nodes.length]).range(d3.schemeSet1);
 
     // create the simulation and set up options
-    var simulation = d3.forceSimulation(nodes) 
+    simulation = d3.forceSimulation(nodes) 
     .force('charge', d3.forceManyBody().strength(5)) 
     .force('center', d3.forceCenter(width / 2, height / 2)) 
     .force('collision', d3.forceCollide().radius(function(d) { 
@@ -56,8 +57,12 @@ function displayValue(d, i){
         .attr('y', () => i.y)
         .attr("font-size", "12px")
         .text( function(d) { return i.val; } ); // Value of the text 
+    
+    d3.select(this)
+        .attr("class", "highlight");
 }
 
 function hideValue(){
-    d3.selectAll(".val").remove()
+    d3.selectAll(".val").remove();
+    d3.select(this).attr("class", "node");
 }
