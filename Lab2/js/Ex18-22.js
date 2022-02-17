@@ -7,7 +7,8 @@ const data = [[
 [ 
 {group: "A", value: 10}, 
 {group: "B", value: 2}, 
-{group: "C", value: 22} ],
+{group: "C", value: 22},
+{group: "D", value: 16} ],
 [ 
 {group: "A", value: 15}, 
 {group: "B", value: 16}, 
@@ -20,8 +21,7 @@ var colors = d3.scaleOrdinal().domain(data).range(["red","blue","green"])
 // set the dimensions and margins of the graph 
 const margin = {top: 60, right: 30, bottom: 70, left: 60}; 
 const width  = 460 - margin.left - margin.right; 
-const height = 400 - margin.top - margin.bottom; 
-
+const height = 400 - margin.top - margin.bottom;
 
 //******************** DRAWING ********************//
 // append the svg object to the body of the page 
@@ -37,15 +37,17 @@ var svg = d3.select('body')
 //---------- AXIS ----------//
 // add X axis
 var x = d3.scaleBand() 
-    .range([ 0, width ]) 
+    .range([ 0, width]) 
     .domain(data[0].map(function(d) { return d.group; })) 
     .padding(0.2); 
 
 svg.append("g") 
+    .attr("id", "bottomAxis")
     .attr("transform", "translate(0," + height + ")") 
     .call(d3.axisBottom(x)) 
 
 svg.append("g")
+    .attr("id", "topAxis")
     .call(d3.axisTop(x)) 
 
 // Add Y axis 
@@ -54,10 +56,12 @@ var y = d3.scaleLinear()
     .range([ height, 0]); 
 
 svg.append("g") 
+    .attr("id", "leftAxis")
     .attr("class", "myYaxis") 
     .call(d3.axisLeft(y)); 
 
 svg.append("g")
+    .attr("id", "rightAxis")
     .attr("transform", "translate("+width+",0)") 
     .call(d3.axisRight(y)) 
 
@@ -67,19 +71,47 @@ svg.append("g")
 function update(index) { 
     var u = svg.selectAll("rect") 
         .data(data[index]) 
-        
-    u.enter() 
-        .append("rect") 
-        .on("mouseover", displayValue)
-        .on("mouseout", hideValue)
-        .merge(u) 
-        .transition() 
-        .duration(1000) 
-        .attr("x", function(d) { return x(d.group); }) 
-        .attr("y", function(d) { return y(d.value); }) 
-        .attr("width", x.bandwidth()) 
-        .attr("height", function(d) { return height - y(d.value); }) 
-        .attr("fill", colors(index));
+
+    // change the x scale
+    x.domain(data[index].map(d => d.group));
+    d3.select("#bottomAxis")
+        .call(d3.axisBottom(x));
+    d3.select("#topAxis")
+        .call(d3.axisTop(x));
+
+    u.join( 
+        // for newly created divs
+        enter => {enter.append("rect") 
+            .on("mouseover", displayValue)
+            .on("mouseout", hideValue)
+            .merge(u) 
+            .transition() 
+            .duration(1000) 
+            .attr("x", function(d) { return x(d.group); }) 
+            .attr("y", function(d) { return y(d.value); }) 
+            .attr("width", x.bandwidth()) 
+            .attr("height", function(d) { return height - y(d.value); }) 
+            .attr("fill", colors(index))
+        },
+        // for updating existing
+        update => {
+            update.transition() 
+            .duration(1000) 
+            .attr("x", function(d) { return x(d.group); }) 
+            .attr("y", function(d) { return y(d.value); }) 
+            .attr("width", x.bandwidth()) 
+            .attr("height", function(d) { return height - y(d.value); }) 
+            .attr("fill", colors(index));
+        },
+        // removing any not used, fade out
+        exit => {
+            exit.transition()
+            .duration(500)
+            .attr("x", width)
+            .style("opacity",0)
+            .remove();
+        }
+    );
 } 
 
 // displays the value when hovering over the bar
