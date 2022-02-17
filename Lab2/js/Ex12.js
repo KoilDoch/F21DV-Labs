@@ -34,14 +34,28 @@ function update() {
     bar1.transition() 
         .ease(d3.easeLinear) 
         .duration(2000) 
-        .attr("height",100) 
+        .attr("height",100)
+        .attr("fill", "red")
+        .transition() 
+        .ease(d3.easeLinear) 
+        .duration(2000) 
+        .delay(4000)
+        .attr("height",20)
+        .attr("fill", "blue");
 
     // grow second bar
     bar2.transition() 
         .ease(d3.easeLinear) 
         .duration(2000) 
         .delay(2000) 
-        .attr("height",100) 
+        .attr("height",100)
+        .attr("fill", "red")
+        .transition() 
+        .ease(d3.easeLinear) 
+        .duration(2000) 
+        .delay(4000)
+        .attr("height",20)
+        .attr("fill", "blue");
 
     // grow third bar
     bar3.transition() 
@@ -49,4 +63,11 @@ function update() {
         .duration(2000) 
         .delay(4000) 
         .attr("height",100) 
+        .attr("fill", "red")
+        .transition() 
+        .ease(d3.easeLinear) 
+        .duration(2000) 
+        .delay(4000)
+        .attr("height",20)
+        .attr("fill", "blue");
 }
