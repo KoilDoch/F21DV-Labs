@@ -17,7 +17,7 @@ const data = [[
 var colors = d3.scaleOrdinal().domain(data).range(["red","blue","green"])
 
 // set the dimensions and margins of the graph 
-const margin = {top: 30, right: 30, bottom: 70, left: 60}; 
+const margin = {top: 60, right: 30, bottom: 70, left: 60}; 
 const width  = 460 - margin.left - margin.right; 
 const height = 400 - margin.top - margin.bottom; 
 
@@ -57,6 +57,8 @@ function update(index) {
         
     u.enter() 
         .append("rect") 
+        .on("mouseover", displayValue)
+        .on("mouseout", hideValue)
         .merge(u) 
         .transition() 
         .duration(1000) 
@@ -64,8 +66,27 @@ function update(index) {
         .attr("y", function(d) { return y(d.value); }) 
         .attr("width", x.bandwidth()) 
         .attr("height", function(d) { return height - y(d.value); }) 
-        .attr("fill", colors(index)); 
+        .attr("fill", colors(index));
 } 
+
+// displays the value when hovering over the bar
+function displayValue(d, i){
+    //display the value
+    svg.append("text") 
+        .attr('class', 'val')  
+        .attr('x', function() { 
+            return x(i.group); 
+        }) 
+        .attr('y', function() { 
+            return y(i.value) - 15; 
+        }) 
+        .text( function(d) { return '$' + i.value; } ); // Value of the text 
+}
+
+// hide the value of the text when not hovering
+function hideValue() {
+    d3.selectAll(".val").remove();
+}
 
 // Initialize the plot with the first dataset 
 update(0)
