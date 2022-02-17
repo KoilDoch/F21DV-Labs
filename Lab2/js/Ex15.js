@@ -1,7 +1,7 @@
 // useful variables
 var margin = 200; 
 var width  = 400; 
-var height = 300; 
+var height = 300;
 
 // create the svg
 var svg = d3.select("body")
@@ -27,6 +27,10 @@ var g = svg.append("g")
 
 // process data
 d3.csv("Lab2/csv/years.csv").then(function(data) {  
+    // use this to generate colors for the bars, can be used for any size of input.
+    // minimum values are blue, higher values are red (provided data is sorted)
+    var colors = d3.scaleLinear().domain([1,data.length]).range(["blue","red"])
+
     // domains created
     x.domain( data.map(function(d) { return d.year; }) ); 
     y.domain([0, d3.max(data, function(d) { return d.value; })]); 
@@ -60,6 +64,7 @@ d3.csv("Lab2/csv/years.csv").then(function(data) {
         .data(data) 
         .enter().append("rect") 
         .attr("class", "bar") 
+        .style("fill", (d, i) => {return colors(i)})
         .on("mouseover", onMouseOver)
         .on("mouseout", onMouseOut)
         .attr("x", function(d) { return x(d.year); }) 
