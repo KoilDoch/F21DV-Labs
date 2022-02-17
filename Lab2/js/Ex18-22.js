@@ -1,21 +1,20 @@
 // create 2 data_set 
-const data1 = [ 
+const data = [[ 
 {group: "A", value: 5}, 
 {group: "B", value: 20}, 
-{group: "C", value: 9} 
-]; 
-
-const data2 = [ 
+{group: "C", value: 9} ],
+[ 
 {group: "A", value: 10}, 
 {group: "B", value: 2}, 
-{group: "C", value: 22} 
-]; 
+{group: "C", value: 22} ],
+[ 
+{group: "A", value: 15}, 
+{group: "B", value: 16}, 
+{group: "C", value: 10} 
+]];
 
-const data3 = [ 
-    {group: "A", value: 15}, 
-    {group: "B", value: 16}, 
-    {group: "C", value: 10} 
-]; 
+// get colours
+var colors = d3.scaleOrdinal().domain(data).range(["red","blue","green"])
 
 // set the dimensions and margins of the graph 
 const margin = {top: 30, right: 30, bottom: 70, left: 60}; 
@@ -35,7 +34,7 @@ var svg = d3.select('body')
 // X axis 
 var x = d3.scaleBand() 
     .range([ 0, width ]) 
-    .domain(data1.map(function(d) { return d.group; })) 
+    .domain(data[0].map(function(d) { return d.group; })) 
     .padding(0.2); 
 
 svg.append("g") 
@@ -52,9 +51,9 @@ svg.append("g")
     .call(d3.axisLeft(y)); 
 
 // A function that create / update the plot for a given variable: 
-function update(data) { 
+function update(index) { 
     var u = svg.selectAll("rect") 
-        .data(data) 
+        .data(data[index]) 
         
     u.enter() 
         .append("rect") 
@@ -65,8 +64,8 @@ function update(data) {
         .attr("y", function(d) { return y(d.value); }) 
         .attr("width", x.bandwidth()) 
         .attr("height", function(d) { return height - y(d.value); }) 
-        .attr("fill", "#69b3a2") 
+        .attr("fill", colors(index)); 
 } 
 
 // Initialize the plot with the first dataset 
-update(data1)
+update(0)
