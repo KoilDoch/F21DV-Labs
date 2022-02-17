@@ -1,3 +1,4 @@
+//******************** DATA ********************//
 // create 2 data_set 
 const data = [[ 
 {group: "A", value: 5}, 
@@ -21,6 +22,8 @@ const margin = {top: 60, right: 30, bottom: 70, left: 60};
 const width  = 460 - margin.left - margin.right; 
 const height = 400 - margin.top - margin.bottom; 
 
+
+//******************** DRAWING ********************//
 // append the svg object to the body of the page 
 var svg = d3.select('body') 
     .append('div') 
@@ -31,7 +34,8 @@ var svg = d3.select('body')
         .attr("transform", 
         "translate(" + margin.left + "," + margin.top + ")"); 
 
-// X axis 
+//---------- AXIS ----------//
+// add X axis
 var x = d3.scaleBand() 
     .range([ 0, width ]) 
     .domain(data[0].map(function(d) { return d.group; })) 
@@ -41,15 +45,24 @@ svg.append("g")
     .attr("transform", "translate(0," + height + ")") 
     .call(d3.axisBottom(x)) 
 
+svg.append("g")
+    .call(d3.axisTop(x)) 
+
 // Add Y axis 
 var y = d3.scaleLinear() 
-    .domain([0, 20]) 
+    .domain([0, 22]) 
     .range([ height, 0]); 
 
 svg.append("g") 
     .attr("class", "myYaxis") 
     .call(d3.axisLeft(y)); 
 
+svg.append("g")
+    .attr("transform", "translate("+width+",0)") 
+    .call(d3.axisRight(y)) 
+
+
+//******************** EVENTS ********************//    
 // A function that create / update the plot for a given variable: 
 function update(index) { 
     var u = svg.selectAll("rect") 
