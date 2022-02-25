@@ -4,6 +4,17 @@ var dataset = {
     pears: [2654, 3657, 1342, 875, 6532]
 };
 
+// create buttons
+var buttons = d3.select("body")
+    .append("g")
+    .attr("class", "buttons");
+
+for(i = 0; i < 2; i++){
+    buttons.append("button")
+    .attr("onclick", "setData(" + i + ")")
+    .text("Dataset " + (i+1))
+}
+
 // size values
 var width = 460, 
     height = 300, 

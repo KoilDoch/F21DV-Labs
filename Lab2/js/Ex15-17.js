@@ -26,7 +26,7 @@ var g = svg.append("g")
         .attr("transform", "translate(" + 100 + "," + 100 + ")"); 
 
 // process data
-d3.csv("Lab2/csv/years.csv").then(function(data) {  
+d3.csv("Lab2/csv/dataset15.csv").then(function(data) {  
     // use this to generate colors for the bars, can be used for any size of input.
     // minimum values are blue, higher values are red (provided data is sorted)
     var colors = d3.scaleLinear().domain([1,data.length]).range(["blue","red"])

@@ -1,5 +1,15 @@
-
 //******************** PREPARING ********************//
+//---------- BUTTONS ----------//
+var buttons = d3.select("body")
+    .append("g")
+    .attr("class", "buttons");
+
+for(i = 0; i < 2; i++){
+    buttons.append("button")
+    .attr("onclick", "update(" + i + ")")
+    .text("Dataset " + (i+1))
+}
+
 //---------- SVG ----------//
 const width = 700;
 const height = 300;

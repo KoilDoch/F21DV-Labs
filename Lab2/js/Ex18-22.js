@@ -1,19 +1,30 @@
 //******************** DATA ********************//
 // create 2 data_set 
 const data = [[ 
-{group: "A", value: 5}, 
-{group: "B", value: 20}, 
-{group: "C", value: 9} ],
-[ 
-{group: "A", value: 10}, 
-{group: "B", value: 2}, 
-{group: "C", value: 22},
-{group: "D", value: 16} ],
-[ 
-{group: "A", value: 15}, 
-{group: "B", value: 16}, 
-{group: "C", value: 10} 
-]];
+    {group: "A", value: 5}, 
+    {group: "B", value: 20}, 
+    {group: "C", value: 9} ],
+    [ 
+    {group: "A", value: 10}, 
+    {group: "B", value: 2}, 
+    {group: "C", value: 22},
+    {group: "D", value: 16} ],
+    [ 
+    {group: "A", value: 15}, 
+    {group: "B", value: 16}, 
+    {group: "C", value: 10} 
+    ]];
+
+//******************** CREATE BUTTONS ********************//
+var buttons = d3.select("body")
+    .append("g")
+    .attr("class", "buttons");
+
+for(i = 0; i < data.length; i++){
+    buttons.append("button")
+    .attr("onclick", "update(" + i + ")")
+    .text("Dataset " + (i+1))
+}
 
 // get colours
 var colors = d3.scaleOrdinal().domain(data).range(["red","blue","green"])
